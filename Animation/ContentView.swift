@@ -11,24 +11,24 @@ struct ContentView: View {
     @State private var animationAmount = 1.0
     
     var body: some View {
-        Button("Tap Me") {
-            //animationAmount += 0.5
-        }
-        .padding(50)
-        .background(.red)
-        .foregroundColor(.white)
-        .clipShape(Circle())
-        .overlay(Circle()
-                    .stroke(.red)
-                    .scaleEffect(animationAmount)
-                    .opacity(2 - animationAmount)
-                     //animation type (.default, .easout...) occurs anytime the value changes
-                     .animation(
-                         .easeInOut(duration: 1)
-                             .repeatForever(autoreverses: false),
-                         value: animationAmount))
-        .onAppear {
-            animationAmount = 2
+        print(animationAmount)
+        
+        return VStack{
+            //former: state change has no idea itll animate the view bc implicit
+            //this case: the view has no idea itll be animated, the state change is what causes the animation to occur
+            Stepper("Scale Amount", value: $animationAmount.animation(
+                .easeInOut(duration: 1)
+                    .repeatCount(3, autoreverses: true)
+            ), in: 1...10)
+            Spacer()
+            Button("Tap Me") {
+                animationAmount += 1
+            }
+            .padding(50)
+            .background(.red)
+            .foregroundColor(.white)
+            .clipShape(Circle())
+            .scaleEffect(animationAmount)
         }
     }
 }
