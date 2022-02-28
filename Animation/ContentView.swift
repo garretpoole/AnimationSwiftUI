@@ -12,16 +12,11 @@ struct ContentView: View {
     
     var body: some View {
         Button("Tap Me") {
-            //just adding 360 will not do anything
-            withAnimation(.interpolatingSpring(stiffness: 5, damping: 1)){
-                animationAmount += 360
-            }
+            //do nothing
         }
-        .padding(50)
-        .background(.red)
+        .frame(width: 200, height: 200)
+        .background(.blue)
         .foregroundColor(.white)
-        .clipShape(Circle())
-        .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 1, z: 0))
     }
 }
 
